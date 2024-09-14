@@ -21,9 +21,10 @@ public class GameManager : MonoBehaviour
     [Header("# Game Object")]
     public GameObject overUI;
     public GameObject clearUI;
-
+    public Spawner spawner;
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI healthText;
+    public GameObject[] items;
 
     [SerializeField] private int level;
 
@@ -43,14 +44,24 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         gamePause = true;
-        Time.timeScale = 0f;
+        spawner.GetComponent<Spawner>().isSpawning = false;
+        items = GameObject.FindGameObjectsWithTag("Item");
+        foreach (GameObject item in items)
+        {
+            item.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
+        }
         overUI.gameObject.SetActive(true);
     }
 
     public void GameClear()
     {
         gamePause = true;
-        Time.timeScale = 0f;
+        spawner.GetComponent<Spawner>().isSpawning = false;
+        items = GameObject.FindGameObjectsWithTag("Item");
+        foreach (GameObject item in items)
+        {
+            item.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
+        }
         clearUI.gameObject.SetActive(true);
     }
 
